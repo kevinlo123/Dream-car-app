@@ -32,6 +32,8 @@
     let numberOfCars = document.getElementById("numOfCars");
     let cars = 0;
     const getCarButton =  document.getElementById("getCar");
+    const sellCarsButton = document.getElementById("sell");
+    
   
     //event handler
     
@@ -48,5 +50,14 @@
       yearOfUsersCar.value = "";
       makeOfUsersCar.value = "";
       modelOfUsersCar.value = "";
+    });
+
+    sellCarsButton.addEventListener("click" , () =>{
+      cars = 0;
+      numberOfCars.innerHTML = cars;
+      for(i = 0; i <= 10; i++){ // for loop deletes 10 p's from dom
+        const divCont = document.getElementsByTagName("p")[0];
+        divCont.parentNode.removeChild(divCont);
+      }
     });
   })();
