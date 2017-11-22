@@ -1,12 +1,6 @@
 //Object oriented Javascript:
-//1) wrap everything in a immediately invoked function expression
-//2) declare golobal variables
-//3) declare class object constructors
-//4) declare global functions
-//5) declare event handler
 
-
-(() =>{ //immediately invoked function expression
+(() => { //immediately invoked function expression used to avoid variable hoisting, protect against polluting the global environment 
     // class car object constuctor
     
     class Car { 
@@ -16,10 +10,33 @@
         this.model = model;
       
         this.enjoyCar = (year,make,model) => {
+          let div = document.createElement("div");
           let paragraph = document.createElement("p");
           let car = "Congratulations! enjoy your new " + year + ", "+ make + " "+ model + "!" ;
           paragraph.innerHTML = car;
-          document.getElementById("newCar").appendChild(paragraph) ;
+          div.appendChild(paragraph);
+          document.getElementById("newCar").appendChild(div);         
+        }
+
+        this.appendButton = () => {
+          var button = document.createElement("button");
+          button.classList.add("remove_button"); 
+          var sellThisCarButton = document.getElementsByClassName("remove_button");
+          var confirm = document.getElementsByClassName("confirm_button");     
+          button.appendChild(document.createTextNode("Sell this car"));
+          document.getElementById("newCar").appendChild(button);
+          for(let i = 0; i < sellThisCarButton.length; i++){
+            sellThisCarButton[i].addEventListener("click" , function(){
+              var butt= sellThisCarButton[i];
+              butt.previousSibling.innerHTML = "<input type='text' id='input_edit' placeholder='Trade'/>" + "<button class='confirm_button'>" + "confirm" + "</button>";
+              for(let y = 0; y < confirm.length; y++){
+                confirm[y].addEventListener("click" , function(){
+                  var newCar = document.getElementById("input_edit").value;
+                  butt.previousSibling.innerHTML = newCar;
+                });
+              }
+            });
+          }
         }
       }
     }
@@ -33,8 +50,8 @@
     let cars = 0;
     const getCarButton =  document.getElementById("getCar");
     const sellCarsButton = document.getElementById("sell");
+    const inputs = document.getElementsByTagName("input");
     
-  
     //event handler
     
     getCarButton.addEventListener("click" , () => {
@@ -46,18 +63,19 @@
         console.log(usersCar);
         cars += 1;
         numberOfCars.innerHTML = " " + cars;
+        usersCar.appendButton();
+        for(i = 0; i < inputs.length; i++){
+          inputs[i].value = "";
+        }
       }
-      yearOfUsersCar.value = "";
-      makeOfUsersCar.value = "";
-      modelOfUsersCar.value = "";
     });
 
-    sellCarsButton.addEventListener("click" , () =>{
+    sellCarsButton.addEventListener("click" , () => {
       cars = 0;
-      numberOfCars.innerHTML = cars;
-      for(i = 0; i <= 10; i++){ // for loop deletes 10 p's from dom
-        const divCont = document.getElementsByTagName("p")[0];
-        divCont.parentNode.removeChild(divCont);
-      }
+      numberOfCars.innerHTML = " All cars have been sold!";
+      const divCont = document.querySelector("#newCar");
+      divCont.parentNode.removeChild(divCont);
     });
   })();
+
+  
