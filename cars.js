@@ -18,21 +18,31 @@
           document.getElementById("newCar").appendChild(div);         
         }
 
-        this.appendButton = () => {
-          var button = document.createElement("button");
+        this.appendTradeButton = () => {
+          const button = document.createElement("button");
           button.classList.add("remove_button"); 
-          var sellThisCarButton = document.getElementsByClassName("remove_button");
-          var confirm = document.getElementsByClassName("confirm_button");     
-          button.appendChild(document.createTextNode("Sell this car"));
+          const sellThisCarButton = document.getElementsByClassName("remove_button");
+          const confirm = document.getElementsByClassName("confirm_button");     
+          button.appendChild(document.createTextNode("Trade this car"));
           document.getElementById("newCar").appendChild(button);
           for(let i = 0; i < sellThisCarButton.length; i++){
-            sellThisCarButton[i].addEventListener("click" , function(){
-              var butt= sellThisCarButton[i];
-              butt.previousSibling.innerHTML = "<input type='text' id='input_edit' placeholder='Trade'/>" + "<button class='confirm_button'>" + "confirm" + "</button>";
+            sellThisCarButton[i].addEventListener("click" , () => {
+              let tradeCar = sellThisCarButton[i];
+              tradeCar.previousSibling.innerHTML = "<input type='text' id='input_edit' placeholder='Year'/>" +
+                                                   "<input type='text' id='input_editTwo' placeholder='Make'/>" + 
+                                                   "<input type='text' id='input_editThree' placeholder='Model'/>" + 
+                                                   "<button class='confirm_button'>" + "trade" + "</button>";
               for(let y = 0; y < confirm.length; y++){
-                confirm[y].addEventListener("click" , function(){
-                  var newCar = document.getElementById("input_edit").value;
-                  butt.previousSibling.innerHTML = newCar;
+                confirm[y].addEventListener("click" , () => {
+                  document.getElementById("input_edit").style.display = "none";
+                  document.getElementById("input_editTwo").style.display = "none";
+                  document.getElementById("input_editThree").style.display = "none";
+                  tradeCar.previousSibling.style.display = "none";                   
+                  confirm[y].style.display = "none";
+                  sellThisCarButton[i].style.display = "none";                                    
+                  let trade = new Car(document.getElementById("input_edit").value, document.getElementById("input_editTwo").value, document.getElementById("input_editThree").value);
+                  trade.enjoyCar(document.getElementById("input_edit").value, document.getElementById("input_editTwo").value, document.getElementById("input_editThree").value);
+                  trade.appendTradeButton();
                 });
               }
             });
@@ -63,7 +73,7 @@
         console.log(usersCar);
         cars += 1;
         numberOfCars.innerHTML = " " + cars;
-        usersCar.appendButton();
+        usersCar.appendTradeButton();
         for(i = 0; i < inputs.length; i++){
           inputs[i].value = "";
         }
