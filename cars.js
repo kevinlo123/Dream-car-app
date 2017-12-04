@@ -79,6 +79,8 @@
         }
       }
     });
+    
+    //remember add another method 
 
     sellCarsButton.addEventListener("click" , () => {
       cars = 0;
