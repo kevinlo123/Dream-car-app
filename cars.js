@@ -1,7 +1,9 @@
-//Object oriented Javascript:
+//OOP Javascript:
 
 (() => { //immediately invoked function expression used to avoid variable hoisting, protect against polluting the global environment 
     // class car object constuctor
+    
+    //JS car cLass
     
     class Car { 
       constructor(year,make,model){
